@@ -118,10 +118,8 @@ setup_files() {
 setup_config() {
 	echo "editing config files"
 	sed -i 's/ZSH_TEME=.*/ZSH_THEME="agnoster"\nZSH_TMUX_AUTOSTART=true\nZSH_TMUX_AUTOSTART=true\nZSH_TMUX_AUTOCONNECT=false/g' ~/.zshrc
-	sed -i 's/^plugins=.*/plugins=(git tmux common-aliases archlinux autojump)/g' ~/.zshrc
-	echo 'prompt_context(){}' >>~/.zshrc
+	sed -i 's/^plugins=.*/plugins=(git tmux common-aliases archlinux autojump instantos)/g' ~/.zshrc
 }
-
 
 main() {
 	# Run as unattended if stdin is closed

@@ -33,7 +33,6 @@ BRANCH=${BRANCH:-master}
 CHSH=${CHSH:-yes}
 RUNZSH=${RUNZSH:-yes}
 
-
 command_exists() {
 	command -v "$@" >/dev/null 2>&1
 }
@@ -91,10 +90,23 @@ setup_zshrc() {
 	cp "$ZSH/templates/zshrc.zsh-template" ~/.zshrc
 	sed "/^export ZSH=/ c\\
 export ZSH=\"$ZSH\"
-" ~/.zshrc > ~/.zshrc-omztemp
+" ~/.zshrc >~/.zshrc-omztemp
 	mv -f ~/.zshrc-omztemp ~/.zshrc
 
 	echo
+}
+
+setup_files() {
+
+	if ! [ -e /usr/share/instantshell ]; then
+		echo "required files not found, installation failed"
+		exit 1
+	fi
+
+	echo "copying files"
+	mkdir -p "$ZSH"
+	cp -r /usr/share/instantshell/* "$ZSH/"
+
 }
 
 setup_shell() {
@@ -123,45 +135,31 @@ setup_shell() {
 	printf "${YELLOW}Do you want to change your default shell to zsh? [Y/n]${RESET} "
 	read opt
 	case $opt in
-		y*|Y*|"") echo "Changing the shell..." ;;
-		n*|N*) echo "Shell change skipped."; return ;;
-		*) echo "Invalid choice. Shell change skipped."; return ;;
+	y* | Y* | "") echo "Changing the shell..." ;;
+	n* | N*)
+		echo "Shell change skipped."
+		return
+		;;
+	*)
+		echo "Invalid choice. Shell change skipped."
+		return
+		;;
 	esac
 
 	# Check if we're running on Termux
 	case "$PREFIX" in
-		*com.termux*) termux=true; zsh=zsh ;;
-		*) termux=false ;;
+	*com.termux*)
+		termux=true
+		zsh=zsh
+		;;
+	*) termux=false ;;
 	esac
-
-	if [ "$termux" != true ]; then
-		# Test for the right location of the "shells" file
-		if [ -f /etc/shells ]; then
-			shells_file=/etc/shells
-		elif [ -f /usr/share/defaults/etc/shells ]; then # Solus OS
-			shells_file=/usr/share/defaults/etc/shells
-		else
-			error "could not find /etc/shells file. Change your default shell manually."
-			return
-		fi
-
-		# Get the path to the right zsh binary
-		# 1. Use the most preceding one based on $PATH, then check that it's in the shells file
-		# 2. If that fails, get a zsh path from the shells file, then check it actually exists
-		if ! zsh=$(which zsh) || ! grep -qx "$zsh" "$shells_file"; then
-			if ! zsh=$(grep '^/.*/zsh$' "$shells_file" | tail -1) || [ ! -f "$zsh" ]; then
-				error "no zsh binary found or not present in '$shells_file'"
-				error "change your default shell manually."
-				return
-			fi
-		fi
-	fi
 
 	# We're going to change the default shell, so back up the current one
 	if [ -n "$SHELL" ]; then
-		echo $SHELL > ~/.shell.pre-oh-my-zsh
+		echo $SHELL >~/.shell.pre-oh-my-zsh
 	else
-		grep "^$USER:" /etc/passwd | awk -F: '{print $7}' > ~/.shell.pre-oh-my-zsh
+		grep "^$USER:" /etc/passwd | awk -F: '{print $7}' >~/.shell.pre-oh-my-zsh
 	fi
 
 	# Actually change the default shell to zsh
@@ -185,8 +183,11 @@ main() {
 	# Parse arguments
 	while [ $# -gt 0 ]; do
 		case $1 in
-			--unattended) RUNZSH=no; CHSH=no ;;
-			--skip-chsh) CHSH=no ;;
+		--unattended)
+			RUNZSH=no
+			CHSH=no
+			;;
+		--skip-chsh) CHSH=no ;;
 		esac
 		shift
 	done
@@ -206,6 +207,7 @@ main() {
 		exit 1
 	fi
 
+	setup_files
 	setup_zshrc
 	setup_shell
 

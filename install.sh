@@ -21,6 +21,12 @@
 # For example:
 #   sh install.sh --unattended
 #
+
+if [ -e ~/.oh-my-zsh ]; then
+	echo "existing oh my zsh installation found"
+	exit 0
+fi
+
 set -e
 
 # Default settings
@@ -107,6 +113,13 @@ setup_files() {
 	mkdir -p "$ZSH"
 	cp -r /usr/share/instantshell/* "$ZSH/"
 
+}
+
+setup_config() {
+	echo "editing config files"
+	sed -i 's/ZSH_TEME=.*/ZSH_THEME="agnoster"\nZSH_TMUX_AUTOSTART=true\nZSH_TMUX_AUTOSTART=true\nZSH_TMUX_AUTOCONNECT=false/g' ~/.zshrc
+	sed -i 's/^plugins=.*/plugins=(git tmux common-aliases archlinux autojump)/g' ~/.zshrc
+	echo 'prompt_context(){}' >>~/.zshrc
 }
 
 setup_shell() {
@@ -210,6 +223,7 @@ main() {
 	setup_files
 	setup_zshrc
 	setup_shell
+	setup_config
 
 	printf "$GREEN"
 	cat <<-'EOF'

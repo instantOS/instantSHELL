@@ -185,7 +185,6 @@ main() {
 		exit
 	fi
 
-	exec zsh -l
 }
 
 main "$@"

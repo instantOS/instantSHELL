@@ -113,6 +113,12 @@ setup_files() {
 	mkdir -p "$ZSH"
 	cp -r /usr/share/instantshell/* "$ZSH/"
 
+	# local install of autojump causes $PATH to corrupt
+	if [ -e ~/.autojump ]; then
+		echo "removing local autojump install"
+		rm -rf ~/.autojump
+	fi
+
 }
 
 setup_config() {

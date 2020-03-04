@@ -13,3 +13,5 @@ tmkill() {
 sl() {
     sll
 }
+
+alias v=nvim

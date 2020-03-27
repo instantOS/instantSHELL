@@ -18,4 +18,8 @@ pb() {
     pb $@
 }
 
+gclone() {
+    git clone --depth=1 https://github.com/${1:-paperbenni}/$2.git
+}
+
 alias v=nvim

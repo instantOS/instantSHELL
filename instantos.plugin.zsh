@@ -1,4 +1,3 @@
-
 # kill all tmux sessions with no terminal emulator attached
 tmkill() {
     LIST="$(tmux ls)"
@@ -12,6 +11,11 @@ tmkill() {
 
 sl() {
     sll
+}
+
+pb() {
+    source /usr/share/paperbash/import.sh || return 1
+    pb $@
 }
 
 alias v=nvim

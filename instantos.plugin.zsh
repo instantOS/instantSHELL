@@ -22,4 +22,13 @@ gclone() {
     git clone --depth=1 https://github.com/${1:-paperbenni}/$2.git
 }
 
+startx() {
+    if ! xhost &>/dev/null; then
+        command startx $@
+    else
+        echo "don't run this in an x session"
+        echo "command startx still does it if you absolutely want to"
+    fi
+}
+
 alias v=nvim

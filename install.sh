@@ -124,7 +124,7 @@ setup_files() {
 setup_config() {
 	echo "editing config files"
 	sed -i 's/ZSH_THEME=.*/ZSH_THEME="instantos"\nZSH_TMUX_AUTOSTART=true\nZSH_TMUX_AUTOSTART=true\nZSH_TMUX_AUTOCONNECT=false/g' ~/.zshrc # autostart tmux
-	sed -i 's/^plugins=.*/plugins=(git common-aliases archlinux autojump instantos)\n[ -n "$DISPLAY" ] && plugins+=(tmux)/g' ~/.zshrc                                       # preenable plugins
+	sed -i 's/^plugins=.*/plugins=(git common-aliases archlinux autojump instantos)\n[ -n "$DISPLAY" ] \&\& plugins+=(tmux)/g' ~/.zshrc                                       # preenable plugins
 	sed -i 's~with MacPorts~with MacPorts\n/usr/share/autojump/autojump.zsh # pacman installation~g' ~/.zshrc                              # autojump in custom location
 	sed -i 's~# DISABLE_AUTO_UPDATE~DISABLE_AUTO_UPDATE~g' ~/.zshrc                                                                        # incompatible with custom stuff
 }

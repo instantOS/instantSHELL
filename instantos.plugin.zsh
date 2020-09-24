@@ -32,3 +32,7 @@ startx() {
 }
 
 alias v=nvim
+if [ -e ~/.iprofile ]
+then
+    source ~/.iprofile
+fi

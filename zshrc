@@ -1,3 +1,41 @@
-prompt_context() {}
-# fish like syntax highlighting
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Created by newuser for 5.8
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
+
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+### End of Zinit's installer chunk
+
+PS1="ready> " # provide a simple prompt till the theme loads
+
+zinit snippet https://raw.githubusercontent.com/instantOS/instantSHELL/master/instantos.zsh-theme
+
+zinit ice wait"1" lucid
+zinit light zsh-users/zsh-autosuggestions
+zinit ice wait"0" lucid
+zinit light zdharma/fast-syntax-highlighting
+zinit ice wait"1" lucid
+zinit snippet OMZP::autojump
+
+setopt promptsubst
+zinit snippet OMZL::git.zsh
+
+# [Ctrl-RightArrow] - move forward one word
+bindkey -M emacs '^[[1;5C' forward-word
+bindkey -M viins '^[[1;5C' forward-word
+bindkey -M vicmd '^[[1;5C' forward-word
+# [Ctrl-LeftArrow] - move backward one word
+bindkey -M emacs '^[[1;5D' backward-word
+bindkey -M viins '^[[1;5D' backward-word
+bindkey -M vicmd '^[[1;5D' backward-word
+
+[[ $TERM != "screen" ]] && exec tmux
+[[ $- == *i* ]] && instantterminalhelp

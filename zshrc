@@ -28,14 +28,6 @@ zinit snippet OMZP::autojump
 setopt promptsubst
 zinit snippet OMZL::git.zsh
 
-# [Ctrl-RightArrow] - move forward one word
-bindkey -M emacs '^[[1;5C' forward-word
-bindkey -M viins '^[[1;5C' forward-word
-bindkey -M vicmd '^[[1;5C' forward-word
-# [Ctrl-LeftArrow] - move backward one word
-bindkey -M emacs '^[[1;5D' backward-word
-bindkey -M viins '^[[1;5D' backward-word
-bindkey -M vicmd '^[[1;5D' backward-word
 
 [[ $TERM != "screen" ]] && exec tmux
 [[ $- == *i* ]] && instantterminalhelp

@@ -21,6 +21,8 @@ PS1="ready> " # provide a simple prompt till the theme loads
 zinit snippet https://raw.githubusercontent.com/instantOS/instantSHELL/master/instantos.zsh-theme
 
 zinit ice wait"1" lucid
+zinit snippet https://raw.githubusercontent.com/instantOS/instantSHELL/master/instantos.plugin.zsh
+zinit ice wait"1" lucid
 zinit light zsh-users/zsh-autosuggestions
 zinit ice wait"0" lucid
 zinit light zdharma/fast-syntax-highlighting

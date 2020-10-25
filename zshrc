@@ -28,8 +28,10 @@ zinit ice wait"0" lucid
 zinit light zdharma/fast-syntax-highlighting
 zinit ice wait"1" lucid
 zinit snippet OMZP::autojump
-
 setopt promptsubst
 zinit snippet OMZL::git.zsh
+zinit ice wait"1" lucid
+zinit snippet OMZP::fzf
+zinit light Aloxaf/fzf-tab
 
 [[ $- == *i* ]] && instantterminalhelp

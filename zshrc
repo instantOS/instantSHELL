@@ -1,6 +1,6 @@
 # Created by newuser for 5.8
 
-[[ $TERM != "screen" ]] && exec tmux
+[ -z "$TMUX" ] && exec tmux
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
@@ -29,16 +29,16 @@ setopt appendhistory
 zinit ice wait"1" lucid
 zinit snippet https://raw.githubusercontent.com/instantOS/instantSHELL/master/instantos.plugin.zsh
 zinit ice wait"1" lucid
-zinit light zsh-users/zsh-autosuggestions
-zinit ice wait"0" lucid
 zinit light zdharma/fast-syntax-highlighting
 zinit ice wait"1" lucid
 zinit snippet OMZP::autojump
 zinit ice wait"1" lucid
 zinit snippet OMZL::git.zsh
 zinit snippet OMZP::fzf
-zinit ice wait"1" lucid
+
+autoload -Uz compinit
+compinit
+
+bindkey -e
+
 zinit light Aloxaf/fzf-tab
-
-[[ $- == *i* ]] && instantterminalhelp
-

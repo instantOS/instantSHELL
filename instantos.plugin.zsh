@@ -40,6 +40,11 @@ bindkey -M emacs '^[[1;5D' backward-word
 bindkey -M viins '^[[1;5D' backward-word
 bindkey -M vicmd '^[[1;5D' backward-word
 
+zstyle ":completion:*:git-checkout:*" sort false
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+
 alias v=nvim
 if [ -e ~/.iprofile ]
 then

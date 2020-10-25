@@ -20,6 +20,12 @@ PS1="ready> " # provide a simple prompt till the theme loads
 
 zinit snippet https://raw.githubusercontent.com/instantOS/instantSHELL/master/instantos.zsh-theme
 
+setopt promptsubst
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt appendhistory
+
 zinit ice wait"1" lucid
 zinit snippet https://raw.githubusercontent.com/instantOS/instantSHELL/master/instantos.plugin.zsh
 zinit ice wait"1" lucid
@@ -28,10 +34,11 @@ zinit ice wait"0" lucid
 zinit light zdharma/fast-syntax-highlighting
 zinit ice wait"1" lucid
 zinit snippet OMZP::autojump
-setopt promptsubst
-zinit snippet OMZL::git.zsh
 zinit ice wait"1" lucid
+zinit snippet OMZL::git.zsh
 zinit snippet OMZP::fzf
+zinit ice wait"1" lucid
 zinit light Aloxaf/fzf-tab
 
 [[ $- == *i* ]] && instantterminalhelp
+

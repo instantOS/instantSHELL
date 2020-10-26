@@ -31,6 +31,10 @@ startx() {
     fi
 }
 
+paperbash() {
+    source /usr/share/paperbash/import.sh
+}
+
 # [Ctrl-RightArrow] - move forward one word
 bindkey -M emacs '^[[1;5C' forward-word
 bindkey -M viins '^[[1;5C' forward-word
@@ -50,3 +54,4 @@ if [ -e ~/.iprofile ]
 then
     source ~/.iprofile
 fi
+

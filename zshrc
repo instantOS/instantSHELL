@@ -35,6 +35,8 @@ zinit snippet OMZP::autojump
 zinit ice wait"1" lucid
 zinit snippet OMZL::git.zsh
 zinit snippet OMZP::fzf
+zinit ice wait"1" lucid
+zinit light wfxr/forgit
 
 autoload -Uz compinit
 compinit

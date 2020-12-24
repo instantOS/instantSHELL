@@ -22,7 +22,7 @@ autoload -Uz _zinit
 
 PS1="ready> " # provide a simple prompt till the theme loads
 
-zinit snippet https://raw.githubusercontent.com/instantOS/instantSHELL/master/instantos.zsh-theme
+zinit snippet /usr/share/instantshell/instantos.zsh-theme
 
 setopt promptsubst
 HISTFILE=~/.histfile
@@ -30,17 +30,19 @@ HISTSIZE=1000
 SAVEHIST=1000
 setopt appendhistory
 
-zinit ice wait"1" lucid
-zinit snippet https://raw.githubusercontent.com/instantOS/instantSHELL/master/instantos.plugin.zsh
+zinit snippet OMZL::git.zsh
+zinit snippet OMZP::autojump
+zinit snippet /usr/share/instantshell/instantos.plugin.zsh
+
 zinit ice wait"1" lucid
 zinit light zdharma/fast-syntax-highlighting
 zinit ice wait"1" lucid
-zinit snippet OMZP::autojump
+zinit light zsh-users/zsh-autosuggestions
 zinit ice wait"1" lucid
-zinit snippet OMZL::git.zsh
+zinit light zsh-users/zsh-completions
+zinit ice wait"1" lucid
 zinit snippet OMZP::fzf
-zinit ice wait"1" lucid
-zinit light wfxr/forgit
+zinit snippet OMZL::key-bindings.zsh
 
 autoload -Uz compinit
 compinit
@@ -48,3 +50,4 @@ compinit
 bindkey -e
 
 zinit light Aloxaf/fzf-tab
+

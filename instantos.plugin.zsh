@@ -50,6 +50,8 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 
 alias v=nvim
+alias vv="nvim ."
+
 if [ -e ~/.iprofile ]
 then
     source ~/.iprofile

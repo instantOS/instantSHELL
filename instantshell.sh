@@ -1,34 +1,23 @@
 #!/bin/bash
 
-echo "installing instantshell"
+# wrapper for non-interactive installation of instantshell
 
-if command -v checkinternet; then
-    if ! checkinternet; then
-        echo "internet is needed to install instantshell"
+zshrun() {
+    if [ -z "$TMUX" ]; then
+        export TMUX=test
+        zsh -c "source /usr/share/instantshell/zshrc && $1"
+        unset TMUX
+    else
+        zsh -c "source /usr/share/instantshell/zshrc && $1"
     fi
-fi
+}
 
-if ! grep -q 'instantshell/zshrc' ~/.zshrc; then
-    echo "already installed"
-    exit
-fi
-
-if ! [ -e ~/.zshrc ]; then
-    echo "creating zshrc"
-    echo '#!/usr/bin/zsh' >~/.zshrc
-fi
-
-if ! [ -e ~/.zinit/bin ]; then
-    mkdir ~/.zinit
-    git clone --depth=1 https://github.com/zdharma/zinit.git ~/.zinit/bin
-fi
-
-{
-    echo '# remove the line below to remove instantos tweaks'
-    echo 'source /usr/share/instantshell/zshrc'
-} >>~/.zshrc
-
-echo 'zinit self-update' | zsh
-echo 'zinit update' | zsh
-
-echo "done installing instantos shell configuration"
+case "$1" in
+"install")
+    zshrun "echo 'installing'"
+    echo "source /usr/share/instantshell/zshrc" > ~/.zshrc
+    ;;
+"update")
+    zshrun "zinit update"
+    ;;
+esac

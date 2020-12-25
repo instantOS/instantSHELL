@@ -20,4 +20,15 @@ case "$1" in
 "update")
     zshrun "zinit update"
     ;;
+termux)
+    echo "installing on termux"
+    mkdir -p ~/.cache/instantshell
+    cd ~/.cache/ || exit 1
+    git clone --depth=1 https://github.com/instantOS/instantSHELL instantshell
+    cd instantshell || exit 1
+    sed -i '/tmux/d' zshrc
+    sed -i 's~/usr/share/instantshell~$HOME/.cache/instantshell~g' zshrc
+    echo "source $HOME/.cache/instantshell/zshrc" > ~/.zshrc
+    zshrun "echo done"
+    ;;
 esac

@@ -31,7 +31,6 @@ SAVEHIST=1000
 setopt appendhistory
 
 zinit snippet OMZL::git.zsh
-zinit snippet OMZP::autojump
 zinit snippet /usr/share/instantshell/instantos.plugin.zsh
 
 zinit ice wait"1" lucid
@@ -46,6 +45,8 @@ zinit snippet OMZL::key-bindings.zsh
 
 autoload -Uz compinit
 compinit
+
+zinit light agkozak/zsh-z
 
 bindkey -e
 

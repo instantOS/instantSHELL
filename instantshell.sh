@@ -3,33 +3,38 @@
 # wrapper for non-interactive installation of instantshell
 
 zshrun() {
+    TMPZSHRC="/tmp/instantos.$(whoami).zshrc.zsh"
+    # temporarily disable lazy loading to ensure everything is ran
+    grep -v '^zinit ice wait ' /usr/share/instantshell/zshrc >"$TMPZSHRC"
     if [ -z "$TMUX" ]; then
         export TMUX=test
-        zsh -c "source /usr/share/instantshell/zshrc && $1"
+        zsh -c "source $TMPZSHRC && $1"
         unset TMUX
     else
-        zsh -c "source /usr/share/instantshell/zshrc && $1"
+        zsh -c "source $TMPZSHRC && $1"
     fi
 }
 
 case "$1" in
 "install")
     zshrun "echo 'installing'"
-    echo "source /usr/share/instantshell/zshrc" > ~/.zshrc
+    echo "source /usr/share/instantshell/zshrc" >~/.zshrc
+    ;;
+"reinstall")
+    if [ "$2" = "-f" ]; then
+        CONFIRMATION="y"
+    else
+        echo "this will clear your existing shell configuration. Continue? (y/n)"
+        read -r CONFIRMATION
+    fi
+
+    if [ "$CONFIRMATION" = "y" ]; then
+        rm ~/.zshrc
+        rm -rf ~/.zinit
+        zshrun "echo 'installing'"
+    fi
     ;;
 "update")
     zshrun "zinit update"
-    ;;
-termux)
-    echo "installing on termux"
-    mkdir -p ~/.cache/instantshell
-    cd ~/.cache/ || exit 1
-    git clone --depth=1 https://github.com/instantOS/instantSHELL instantshell
-    cd instantshell || exit 1
-    git checkout dev
-    sed -i '/tmux/d' zshrc
-    sed -i 's~/usr/share/instantshell~$HOME/.cache/instantshell~g' zshrc
-    echo "source $HOME/.cache/instantshell/zshrc" > ~/.zshrc
-    zshrun "echo done"
     ;;
 esac

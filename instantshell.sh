@@ -5,7 +5,7 @@
 zshrun() {
     TMPZSHRC="/tmp/instantos.$(whoami).zshrc.zsh"
     # temporarily disable lazy loading to ensure everything is ran
-    grep -v '^zinit ice wait ' /usr/share/instantshell/zshrc >"$TMPZSHRC"
+    grep -v '^zinit ice wait' /usr/share/instantshell/zshrc >"$TMPZSHRC"
     if [ -z "$TMUX" ]; then
         export TMUX=test
         zsh -c "source $TMPZSHRC && $1"
@@ -21,17 +21,22 @@ case "$1" in
     echo "source /usr/share/instantshell/zshrc" >~/.zshrc
     ;;
 "reinstall")
+    instantshell uninstall "$2" || exit
+    instantshell install
+    ;;
+uninstall)
     if [ "$2" = "-f" ]; then
         CONFIRMATION="y"
     else
-        echo "this will clear your existing shell configuration. Continue? (y/n)"
+        echo -n "this will clear your entire zsh configuration. Continue? (y/n) "
         read -r CONFIRMATION
+        echo ""
     fi
-
     if [ "$CONFIRMATION" = "y" ]; then
-        rm ~/.zshrc
-        rm -rf ~/.zinit
-        zshrun "echo 'installing'"
+        [ -e ~/.zshrc ] && rm ~/.zshrc
+        [ -e ~/.zinit ] && rm -rf ~/.zinit
+    else
+        exit 1
     fi
     ;;
 "update")

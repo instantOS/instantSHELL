@@ -42,4 +42,11 @@ uninstall)
 "update")
     zshrun "zinit update"
     ;;
+*)
+    echo "usage: instantshell [COMMAND]
+    install
+    reinstall
+    uninstall
+    update"
+    ;;
 esac

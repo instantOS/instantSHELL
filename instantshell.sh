@@ -8,10 +8,10 @@ zshrun() {
     grep -v '^zinit ice wait' /usr/share/instantshell/zshrc >"$TMPZSHRC"
     if [ -z "$TMUX" ]; then
         export TMUX=test
-        zsh -c "source $TMPZSHRC && $1"
+        zsh -c "cd && source $TMPZSHRC && $1"
         unset TMUX
     else
-        zsh -c "source $TMPZSHRC && $1"
+        zsh -c "cd && source $TMPZSHRC && $1"
     fi
 }
 

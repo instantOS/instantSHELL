@@ -20,10 +20,6 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 ### End of Zinit's installer chunk
 
-PS1="ready> " # provide a simple prompt till the theme loads
-
-zinit snippet /usr/share/instantshell/instantos.zsh-theme
-
 setopt promptsubst
 HISTFILE=~/.histfile
 HISTSIZE=1000
@@ -52,3 +48,5 @@ bindkey -e
 
 zinit light Aloxaf/fzf-tab
 
+export STARSHIP_CONFIG=/usr/share/instantshell/starship.toml
+eval "$(starship init zsh)"

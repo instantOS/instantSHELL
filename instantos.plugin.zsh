@@ -15,6 +15,15 @@ pb() {
     pb $@
 }
 
+pbf() {
+    cd /usr/share/paperbash || instantinstall paperbash || return 1
+    PBCHOICE="$(find . | grep '\.sh' | \
+        fzf --preview 'cat {} | grep "()" | grep -o "[^ ]*()" | grep -o "^[^(]*"; printf "\n\n\n########################\n"; cat {}')" | sed 's/\.\///g'
+    [ -z "$PBCHOICE" ] || return
+    pb "$PBCHOICE"
+    
+}
+
 gclone() {
     git clone --depth=1 https://github.com/${1:-paperbenni}/$2.git
 }

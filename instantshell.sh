@@ -3,6 +3,11 @@
 # wrapper for non-interactive installation of instantshell
 
 zshrun() {
+    if ! command -v zsh &> /dev/null
+    then
+        echo 'please install zsh'
+        return 1
+    fi
     if [ -z "$TMUX" ]; then
         export TMUX=test
         zsh -c "source /usr/share/instantshell/zshrc && $1"

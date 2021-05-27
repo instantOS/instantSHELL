@@ -29,11 +29,6 @@ setopt appendhistory
 zinit snippet OMZL::git.zsh
 zinit snippet /usr/share/instantshell/instantos.plugin.zsh
 
-zinit ice wait"1" lucid
-zinit light zdharma/fast-syntax-highlighting
-zinit ice wait"1" lucid
-zinit light zsh-users/zsh-autosuggestions
-zinit ice wait"1" lucid
 zinit light zsh-users/zsh-completions
 zinit ice wait"1" lucid
 zinit snippet OMZP::fzf
@@ -47,6 +42,15 @@ zinit light agkozak/zsh-z
 bindkey -e
 
 zinit light Aloxaf/fzf-tab
+
+zinit ice wait"1" lucid
+zinit light zdharma/fast-syntax-highlighting
+
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_USE_ASYNC="true"
+
+zinit ice wait"1" lucid
+zinit light zsh-users/zsh-autosuggestions
 
 export STARSHIP_CONFIG=/usr/share/instantshell/starship.toml
 eval "$(starship init zsh)"

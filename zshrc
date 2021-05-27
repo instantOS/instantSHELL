@@ -1,6 +1,6 @@
 # Created by newuser for 5.8
 
-[ -z "$TMUX" ] && exec tmux
+[ -z "$TMUX" ] && command -v tmux &> /dev/null && exec tmux && exit
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then

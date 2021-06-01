@@ -39,6 +39,7 @@ symbol = " "
 
 [java]
 symbol = " "
+style = "red"
 
 [julia]
 symbol = " "

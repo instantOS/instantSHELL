@@ -14,6 +14,12 @@ if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
     fi
 fi
 
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+--color=dark
+--color=fg:-1,bg:-1,hl:#CE50DD,fg+:#ffffff,bg+:#626A7E,hl+:#E0527E
+--color=info:#4BEC90,prompt:#6BE5E7,pointer:#E7766B,marker:#CFCD63,spinner:#5293E1,header:#579CEF
+'
+
 source "$HOME/.zinit/bin/zinit.zsh"
 
 autoload -Uz _zinit

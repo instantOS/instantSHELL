@@ -59,5 +59,8 @@ zinit ice wait"1" lucid
 zinit light zsh-users/zsh-autosuggestions
 
 export STARSHIP_CONFIG=/usr/share/instantshell/starship.toml
-export LESS='-R --use-color -Dd+r$Du+b'
 eval "$(starship init zsh)"
+
+export LESS='-R --use-color -Dd+r$Du+b'
+alias ls='ls --color=auto'
+

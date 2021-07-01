@@ -58,6 +58,8 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 alias v=nvim
 alias vv="nvim ."
 
+command_not_found_handler() {commandfinder $@}
+
 if [ -e ~/.iprofile ]
 then
     source ~/.iprofile

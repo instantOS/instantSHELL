@@ -63,4 +63,6 @@ eval "$(starship init zsh)"
 
 export LESS='-R --use-color -Dd+r$Du+b'
 alias ls='ls --color=auto'
+alias vi=nvim
+alias vim=nvim
 

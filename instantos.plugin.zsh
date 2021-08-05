@@ -12,14 +12,14 @@ sl() {
 
 pb() {
     source /usr/share/paperbash/import.sh || return 1
-    pb $@
+    pb "$@"
 }
 
 pbf() {
     pushd /usr/share/paperbash || instantinstall paperbash || return 1
     PBCHOICE="$(find . | grep '\.sh' | \
-        fzf --preview 'cat {} | grep "()" | grep -o "[^ ]*()" | grep -o "^[^(]*"; printf "\n\n\n########################\n\n"; cat {}')" | sed 's/\.\///g'
-    [ -z "$PBCHOICE" ] || return
+        fzf --preview 'cat {} | grep "()" | grep -o "[^ ]*()" | grep -o "^[^(]*"; printf "\n\n\n########################\n\n"; cat {}' | sed 's/\.\///g')"
+    [ -z "$PBCHOICE" ] && return
     pb "$PBCHOICE"
     popd
 }

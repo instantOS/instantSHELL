@@ -16,12 +16,16 @@ pb() {
 }
 
 pbf() {
-    cd /usr/share/paperbash || instantinstall paperbash || return 1
+    pushd /usr/share/paperbash || instantinstall paperbash || return 1
     PBCHOICE="$(find . | grep '\.sh' | \
-        fzf --preview 'cat {} | grep "()" | grep -o "[^ ]*()" | grep -o "^[^(]*"; printf "\n\n\n########################\n"; cat {}')" | sed 's/\.\///g'
+        fzf --preview 'cat {} | grep "()" | grep -o "[^ ]*()" | grep -o "^[^(]*"; printf "\n\n\n########################\n\n"; cat {}')" | sed 's/\.\///g'
     [ -z "$PBCHOICE" ] || return
     pb "$PBCHOICE"
-    
+    popd
+}
+
+paperbash() {
+    source /usr/share/paperbash/import.sh
 }
 
 gclone() {
@@ -35,10 +39,6 @@ startx() {
         echo "don't run this in an x session"
         echo "command startx still does it if you absolutely want to"
     fi
-}
-
-paperbash() {
-    source /usr/share/paperbash/import.sh
 }
 
 # [Ctrl-RightArrow] - move forward one word

@@ -2,7 +2,7 @@
 
 zsh configuration for instantOS
 
-A modern zinit based shell configuration with sensible defaults
+A modern antibody based shell configuration with sensible defaults
 
 ## Installation from source
 
@@ -10,6 +10,7 @@ A modern zinit based shell configuration with sensible defaults
 git clone https://github.com/instantSHELL
 cd instantSHELL
 sudo make install
-instantshell
+instantshell install
 
 ```
+

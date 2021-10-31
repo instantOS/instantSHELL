@@ -38,6 +38,7 @@ uninstall)
     ;;
 "update")
     zshrun "antibody update"
+    zshrun "antibody bundle < /usr/share/instantshell/bundle.txt > ~/.zsh_plugins.sh "
     ;;
 *)
     echo "usage: instantshell [COMMAND]

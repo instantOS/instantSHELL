@@ -24,6 +24,7 @@ bindkey -e
 
 if ! [ -e .zsh_plugins.sh ]
 then
+    echo "loading plugin bundle"
     antibody bundle < /usr/share/instantshell/bundle.txt > ~/.zsh_plugins.sh
 fi
 

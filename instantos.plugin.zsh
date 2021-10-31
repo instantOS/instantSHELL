@@ -1,3 +1,5 @@
+# instantOS specific zsh functions
+
 # kill all tmux sessions with no terminal emulator attached
 tmkill() {
     for i in $(tmux ls | sed '/(attached)$/d;s/: .*$//')
@@ -28,10 +30,7 @@ paperbash() {
     source /usr/share/paperbash/import.sh
 }
 
-gclone() {
-    git clone --depth=1 https://github.com/${1:-paperbenni}/$2.git
-}
-
+# needed to start an x session from tmux
 startx() {
     if ! xhost &>/dev/null; then
         command startx $@

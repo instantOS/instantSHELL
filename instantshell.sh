@@ -3,15 +3,12 @@
 # wrapper for non-interactive installation of instantshell
 
 zshrun() {
-    TMPZSHRC="/tmp/instantos.$(whoami).zshrc.zsh"
-    # temporarily disable lazy loading to ensure everything is ran
-    grep -v '^zinit ice wait' /usr/share/instantshell/zshrc >"$TMPZSHRC"
     if [ -z "$TMUX" ]; then
         export TMUX=test
-        zsh -c "cd && source $TMPZSHRC && $1"
+        zsh -c "cd && source ~/.zshrc && $1"
         unset TMUX
     else
-        zsh -c "cd && source $TMPZSHRC && $1"
+        zsh -c "cd && source ~/.zshrc && $1"
     fi
 }
 
@@ -34,13 +31,13 @@ uninstall)
     fi
     if [ "$CONFIRMATION" = "y" ]; then
         [ -e ~/.zshrc ] && rm ~/.zshrc
-        [ -e ~/.zinit ] && rm -rf ~/.zinit
+        [ -e ~/.cache/antibody ] && rm -rf ~/.cache/antibody
     else
         exit 1
     fi
     ;;
 "update")
-    zshrun "zinit update"
+    zshrun "antibody update"
     ;;
 *)
     echo "usage: instantshell [COMMAND]

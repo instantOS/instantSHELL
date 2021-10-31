@@ -14,8 +14,8 @@ zshrun() {
 
 case "$1" in
 "install")
-    zshrun "echo 'installing'"
     echo "source /usr/share/instantshell/zshrc" >~/.zshrc
+    zshrun "echo 'installing'"
     ;;
 "reinstall")
     instantshell uninstall "$2" || exit

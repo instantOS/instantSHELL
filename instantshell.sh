@@ -14,7 +14,9 @@ zshrun() {
 
 case "$1" in
 "install")
+    [ -e "$HOME"/.cache/antibody ] || mkdir -p ~/.cache/antibody
     echo "source /usr/share/instantshell/zshrc" >~/.zshrc
+    zshrun "antibody bundle < /usr/share/instantshell/bundle.txt > ~/.zsh_plugins.sh "
     zshrun "echo 'installing'"
     ;;
 "reinstall")
@@ -37,6 +39,7 @@ uninstall)
     fi
     ;;
 "update")
+    [ -e "$HOME"/.cache/antibody ] && mkdir -p ~/.cache/antibody
     zshrun "antibody update"
     zshrun "antibody bundle < /usr/share/instantshell/bundle.txt > ~/.zsh_plugins.sh "
     ;;

@@ -22,13 +22,30 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC="true"
 bindkey -e
 
-if ! [ -e .zsh_plugins.sh ]
+if ! [ -e .zsh_plugins.zsh ]
 then
     echo "loading plugin bundle"
-    antibody bundle < /usr/share/instantshell/bundle.txt > ~/.zsh_plugins.sh
+    BUNDLEFILE="${BUNDLEFILE:-/usr/share/instantshell/bundle.txt}"
+    if command -v antibody
+    then
+        antibody bundle < "$BUNDLEFILE" > ~/.zsh_plugins.zsh
+    else
+        # TODO add local antidote mirror to package to avoid zinit type situations
+        # clone antidote if necessary and generate a static plugin file
+        zhome=${ZDOTDIR:-$HOME}
+        if [[ ! $zhome/.zsh_plugins.zsh -nt $zhome/.zsh_plugins.txt ]]; then
+            [[ -e $zhome/.antidote ]] \
+                || git clone --depth=1 https://github.com/mattmc3/antidote.git $zhome/.antidote
+            [[ -e $zhome/.zsh_plugins.txt ]] || touch $zhome/.zsh_plugins.txt
+            (
+                source $zhome/.antidote/antidote.zsh
+                antidote bundle <"$BUNDLEFILE" >$zhome/.zsh_plugins.zsh
+            )
+        fi
+    fi
 fi
 
-source ~/.zsh_plugins.sh
+source ~/.zsh_plugins.zsh
 
 export STARSHIP_CONFIG=/usr/share/instantshell/starship.toml
 eval "$(starship init zsh)"

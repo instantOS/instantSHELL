@@ -14,7 +14,7 @@ Dependencies
 - [starship](https://starship.rs)
 
 ```sh
-git clone https://github.com/instantSHELL
+git clone https://github.com/instantOS/instantSHELL
 cd instantSHELL
 sudo make install
 instantshell install

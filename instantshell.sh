@@ -16,8 +16,9 @@ case "$1" in
 "install")
     [ -e "$HOME"/.cache/antibody ] || mkdir -p ~/.cache/antibody
     echo "source /usr/share/instantshell/zshrc" >~/.zshrc
-    zshrun "antibody bundle < /usr/share/instantshell/bundle.txt > ~/.zsh_plugins.sh "
-    zshrun "echo 'installing'"
+    zshrun "install_antidote_plugins" || exit 1
+    zshrun "echo 'installing'" || exit 1
+    echo "instantSHELL installation complete"
     ;;
 "reinstall")
     instantshell uninstall "$2" || exit

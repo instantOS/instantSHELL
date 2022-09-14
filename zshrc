@@ -26,7 +26,7 @@ install_antidote_plugins() {
     echo "loading plugin bundle"
     BUNDLEFILE="${BUNDLEFILE:-/usr/share/instantshell/bundle.txt}"
     # clone antidote if necessary and generate a static plugin file
-    =${ZDOTDIR:-$HOME}
+    zhome=${ZDOTDIR:-$HOME}
     cloneantidote() {
         if [ -e /usr/share/instantshell/antidote ]
         then
@@ -55,7 +55,7 @@ fi
 source $zhome/.zsh_plugins.zsh
 
 export STARSHIP_CONFIG=/usr/share/instantshell/starship.toml
-eval "$(starship init)"
+eval "$(starship init zsh)"
 
 export LESS='-R --use-color -Dd+r$Du+b'
 alias ls='ls --color=auto'

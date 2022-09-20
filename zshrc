@@ -22,11 +22,12 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC="true"
 bindkey -e
 
+zhome=${ZDOTDIR:-$HOME}
+
 install_antidote_plugins() {
     echo "loading plugin bundle"
     BUNDLEFILE="${BUNDLEFILE:-/usr/share/instantshell/bundle.txt}"
     # clone antidote if necessary and generate a static plugin file
-    zhome=${ZDOTDIR:-$HOME}
     cloneantidote() {
         if [ -e /usr/share/instantshell/antidote ]
         then

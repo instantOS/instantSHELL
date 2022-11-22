@@ -26,6 +26,7 @@ zhome=${ZDOTDIR:-$HOME}
 
 install_antidote_plugins() {
     echo "loading plugin bundle"
+    [ -e "$HOME/.cache/zsh" ] || mkdir -p "$HOME/.cache/zsh"
     BUNDLEFILE="${BUNDLEFILE:-/usr/share/instantshell/bundle.txt}"
     # clone antidote if necessary and generate a static plugin file
     cloneantidote() {
@@ -47,6 +48,7 @@ install_antidote_plugins() {
     fi
 }
 
+alias iantidote="source $zhome/.antidote/antidote.zsh"
 
 if ! [ -e $zhome/.zsh_plugins.zsh ]
 then

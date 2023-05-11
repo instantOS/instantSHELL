@@ -1,6 +1,6 @@
 # instantOS zshrc
 
-[ -z "$TMUX" ] && command -v tmux &> /dev/null && exec tmux && exit
+[ -z "$NOTMUX" ] && [ -z "$TMUX" ] && command -v tmux &> /dev/null && exec tmux && exit
 
 # TODO: new colorscheme
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
@@ -24,6 +24,13 @@ bindkey -e
 
 zhome=${ZDOTDIR:-$HOME}
 
+isinstantos() {
+    command -v pacman &> /dev/null && \
+        command -v instantwm &> /dev/null && \
+        command -v instantmenu &> /dev/null
+    # TODO parse etc stuff
+}
+
 install_antidote_plugins() {
     echo "loading plugin bundle"
     [ -e "$HOME/.cache/zsh" ] || mkdir -p "$HOME/.cache/zsh"
@@ -43,7 +50,12 @@ install_antidote_plugins() {
         [[ -e $zhome/.zsh_plugins.txt ]] || touch $zhome/.zsh_plugins.txt
         (
             source $zhome/.antidote/antidote.zsh
-            antidote bundle <"$BUNDLEFILE" >$zhome/.zsh_plugins.zsh
+            BUNDLESTUFF=$(cat "$BUNDLEFILE")
+            if ! isinstantos
+            then
+                BUNDLESTUFF="$(grep -v instantos <<<"$BUNDLESTUFF")"
+            fi
+            antidote bundle <<<"$BUNDLESTUFF" >$zhome/.zsh_plugins.zsh
         )
     fi
 }

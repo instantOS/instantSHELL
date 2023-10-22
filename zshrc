@@ -37,16 +37,12 @@ install_antidote_plugins() {
     BUNDLEFILE="${BUNDLEFILE:-/usr/share/instantshell/bundle.txt}"
     # clone antidote if necessary and generate a static plugin file
     cloneantidote() {
-        if [ -e /usr/share/instantshell/antidote ]
-        then
-            git clone --depth=1 /usr/share/instantshell/antidote $zhome/.antidote
-        else
-            git clone --depth=1 https://github.com/mattmc3/antidote.git $zhome/.antidote
-        fi
+        ANTIDOTEURL=/usr/share/instantshell/antidote
+        [ -e "$ANTIDOTEURL" ] || ANTIDOTEURL=https://github.com/mattmc3/antidote.git
+        git clone --depth=1 "$ANTIDOTEURL" $zhome/.antidote
     }
     if [[ ! $zhome/.zsh_plugins.zsh -nt $zhome/.zsh_plugins.txt ]]; then
-        [[ -e $zhome/.antidote ]] \
-            || cloneantidote
+        [[ -e $zhome/.antidote ]] || cloneantidote
         [[ -e $zhome/.zsh_plugins.txt ]] || touch $zhome/.zsh_plugins.txt
         (
             source $zhome/.antidote/antidote.zsh
@@ -62,8 +58,7 @@ install_antidote_plugins() {
 
 alias iantidote="source $zhome/.antidote/antidote.zsh"
 
-if ! [ -e $zhome/.zsh_plugins.zsh ]
-then
+if ! [ -e $zhome/.zsh_plugins.zsh ]; then
     install_antidote_plugins
 fi
 
@@ -76,4 +71,3 @@ export LESS='-R --use-color -Dd+r$Du+b'
 alias ls='ls --color=auto'
 alias vi=nvim
 alias vim=nvim
-

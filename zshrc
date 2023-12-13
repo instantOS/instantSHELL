@@ -1,6 +1,6 @@
 # instantOS zshrc
 
-[ -z "$NOTMUX" ] && [ -z "$TMUX" ] && command -v tmux &> /dev/null && exec tmux && exit
+[ -z "$NOTMUX" ] && [ -z "$TMUX" ] && ! [ "$TERM_PROGRAM" = "vscode" ] && command -v tmux &> /dev/null && exec tmux && exit
 
 # TODO: new colorscheme
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'

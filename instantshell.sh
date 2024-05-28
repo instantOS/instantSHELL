@@ -46,9 +46,9 @@ uninstall)
     ;;
 *)
     echo "usage: instantshell [COMMAND]
-    install
-    reinstall
-    uninstall
-    update"
+    install     install all instantSHELL dotfiles
+    reinstall   remove and install all instantSHELL dotfiles
+    uninstall   remove instantSHELL dotfiles
+    update      update zsh plugins"
     ;;
 esac

@@ -1,6 +1,6 @@
 # instantOS zshrc
 
-[ -z "$TMUX" ] && command -v tmux &> /dev/null && exec tmux && exit
+[ -z "$NOTMUX" ] && [ -z "$TMUX" ] && ! [ "$TERM_PROGRAM" = "vscode" ] && command -v tmux &> /dev/null && exec tmux && exit
 
 # TODO: new colorscheme
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
@@ -24,34 +24,41 @@ bindkey -e
 
 zhome=${ZDOTDIR:-$HOME}
 
+isinstantos() {
+    command -v pacman &> /dev/null && \
+        command -v instantwm &> /dev/null && \
+        command -v instantmenu &> /dev/null
+    # TODO parse etc stuff
+}
+
 install_antidote_plugins() {
     echo "loading plugin bundle"
     [ -e "$HOME/.cache/zsh" ] || mkdir -p "$HOME/.cache/zsh"
     BUNDLEFILE="${BUNDLEFILE:-/usr/share/instantshell/bundle.txt}"
     # clone antidote if necessary and generate a static plugin file
     cloneantidote() {
-        if [ -e /usr/share/instantshell/antidote ]
-        then
-            git clone --depth=1 /usr/share/instantshell/antidote $zhome/.antidote
-        else
-            git clone --depth=1 https://github.com/mattmc3/antidote.git $zhome/.antidote
-        fi
+        ANTIDOTEURL=/usr/share/instantshell/antidote
+        [ -e "$ANTIDOTEURL" ] || ANTIDOTEURL=https://github.com/mattmc3/antidote.git
+        git clone --depth=1 "$ANTIDOTEURL" $zhome/.antidote
     }
     if [[ ! $zhome/.zsh_plugins.zsh -nt $zhome/.zsh_plugins.txt ]]; then
-        [[ -e $zhome/.antidote ]] \
-            || cloneantidote
+        [[ -e $zhome/.antidote ]] || cloneantidote
         [[ -e $zhome/.zsh_plugins.txt ]] || touch $zhome/.zsh_plugins.txt
         (
             source $zhome/.antidote/antidote.zsh
-            antidote bundle <"$BUNDLEFILE" >$zhome/.zsh_plugins.zsh
+            BUNDLESTUFF=$(cat "$BUNDLEFILE")
+            if ! isinstantos
+            then
+                BUNDLESTUFF="$(grep -v instantos <<<"$BUNDLESTUFF")"
+            fi
+            antidote bundle <<<"$BUNDLESTUFF" >$zhome/.zsh_plugins.zsh
         )
     fi
 }
 
 alias iantidote="source $zhome/.antidote/antidote.zsh"
 
-if ! [ -e $zhome/.zsh_plugins.zsh ]
-then
+if ! [ -e $zhome/.zsh_plugins.zsh ]; then
     install_antidote_plugins
 fi
 
@@ -64,4 +71,3 @@ export LESS='-R --use-color -Dd+r$Du+b'
 alias ls='ls --color=auto'
 alias vi=nvim
 alias vim=nvim
-

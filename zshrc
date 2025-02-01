@@ -1,13 +1,17 @@
 # instantOS zshrc
 
-[ -z "$NOTMUX" ] && [ -z "$TMUX" ] && ! [ "$TERM_PROGRAM" = "vscode" ] && command -v tmux &> /dev/null && exec tmux && exit
+[ -z "$NOTMUX" ] && [ -z "$TMUX" ] &&
+    ! [ "$TERM_PROGRAM" = "vscode" ] &&
+    command -v tmux &>/dev/null &&
+    exec tmux &&
+    exit
 
-# TODO: new colorscheme
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
---color=dark
---color=fg:-1,bg:-1,hl:#CE50DD,fg+:#ffffff,bg+:#626A7E,hl+:#E0527E
---color=info:#4BEC90,prompt:#6BE5E7,pointer:#E7766B,marker:#CFCD63,spinner:#5293E1,header:#579CEF
-'
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+--color=selected-bg:#45475a \
+--multi"
 
 setopt promptsubst
 HISTFILE=~/.histfile
@@ -25,10 +29,9 @@ bindkey -e
 zhome=${ZDOTDIR:-$HOME}
 
 isinstantos() {
-    command -v pacman &> /dev/null && \
-        command -v instantwm &> /dev/null && \
-        command -v instantmenu &> /dev/null
-    # TODO parse etc stuff
+    command -v pacman &>/dev/null &&
+        command -v instantwm &>/dev/null &&
+        command -v instantmenu &>/dev/null
 }
 
 install_antidote_plugins() {
@@ -47,8 +50,7 @@ install_antidote_plugins() {
         (
             source $zhome/.antidote/antidote.zsh
             BUNDLESTUFF=$(cat "$BUNDLEFILE")
-            if ! isinstantos
-            then
+            if ! isinstantos; then
                 BUNDLESTUFF="$(grep -v instantos <<<"$BUNDLESTUFF")"
             fi
             antidote bundle <<<"$BUNDLESTUFF" >$zhome/.zsh_plugins.zsh

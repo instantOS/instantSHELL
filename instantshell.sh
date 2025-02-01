@@ -14,7 +14,7 @@ zshrun() {
 
 case "$1" in
 "install")
-    [ -e "$HOME"/.cache/antibody ] || mkdir -p ~/.cache/antibody
+    [ -e "$HOME"/.cache/antidote ] || mkdir -p ~/.cache/antidote/
     echo "source /usr/share/instantshell/zshrc" >~/.zshrc
     zshrun "install_antidote_plugins" || exit 1
     zshrun "echo 'installing'" || exit 1
@@ -34,15 +34,15 @@ uninstall)
     fi
     if [ "$CONFIRMATION" = "y" ]; then
         [ -e ~/.zshrc ] && rm ~/.zshrc
-        [ -e ~/.cache/antibody ] && rm -rf ~/.cache/antibody
+        [ -e ~/.cache/antidote/ ] && rm -rf ~/.cache/antidote/
     else
         exit 1
     fi
     ;;
 "update")
-    [ -e "$HOME"/.cache/antibody ] && mkdir -p ~/.cache/antibody
-    zshrun "antibody update"
-    zshrun "antibody bundle < /usr/share/instantshell/bundle.txt > ~/.zsh_plugins.sh "
+    [ -e "$HOME"/.cache/antidote ] && mkdir -p ~/.cache/antidote/
+    zshrun "iantidote; antidote update"
+    zshrun "iantidote; antidote bundle < /usr/share/instantshell/bundle.txt > ~/.zsh_plugins.sh "
     ;;
 *)
     echo "usage: instantshell [COMMAND]
